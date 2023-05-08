@@ -1,11 +1,6 @@
 package co.edu.unisabana.Siga;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +8,7 @@ import java.util.List;
 @RestController
 public class Controller {
     List<Estudiante> estudianteList= new ArrayList<>();
-/*
-    public Controller(){
-        this.estudianteList = new ArrayList<>();
-        estudianteList.add(new Estudiante("Daniel",2525,3,"Masculino"));
-        estudianteList.add(new Estudiante("Javier",2355,4,"Masculino"));
-        estudianteList.add(new Estudiante("Juan ",2545,7,"Masculino"));
-        estudianteList.add(new Estudiante("Mateo",2655,8,"Masculino"));
-    }
-*/
+
     @GetMapping(path = "/estudiantes/todos")
     public List<Estudiante> obtenerEstudiantes(){
         return estudianteList;
@@ -48,7 +35,7 @@ public class Controller {
     }
 
 
-    @GetMapping(path = "/estudiantes")
+    @GetMapping(path = "/estudiante")
     public List<Estudiante> obtenerEstudiantesPorSemestreYgener0 (@RequestParam int semestre,@RequestParam String genero){
         List<Estudiante> busqueda =new ArrayList<>();
         for (Estudiante estudiante: estudianteList){
@@ -64,6 +51,32 @@ public class Controller {
         estudiante.setCodigo((int)(Math.random()*1000));
         estudianteList.add(estudiante);
         return "Estudiante ingresado corectamente";
+    }
+
+    @DeleteMapping(path = "estudiante/eliminar/{codigo}")
+    public String eliminarEstudiante (@PathVariable int codigo){
+        List<Estudiante> busqueda =new ArrayList<>();
+        for (Estudiante estudiante: estudianteList){
+            if (estudiante.getCodigo()== codigo){
+                busqueda.remove(estudiante);
+                estudianteList=busqueda;
+            }
+        }
+        return "Estudiante eliminado correctamente";
+    }
+
+    @GetMapping(path = "/estudiante/busca")
+    public List<Estudiante> obtenerEstudiantesPorSemestreYLimite(@RequestParam String facultad, @RequestParam(required=false) Integer limite) {
+        List<Estudiante> busqueda = new ArrayList<>();
+        for (Estudiante estudiante: estudianteList) {
+            if (facultad.equals(estudiante.getFacultad())) {
+                busqueda.add(estudiante);
+            }
+        }
+        if (limite != null && limite < busqueda.size()) {
+            busqueda = busqueda.subList(0, limite);
+        }
+        return busqueda;
     }
 
 }

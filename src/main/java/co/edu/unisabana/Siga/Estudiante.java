@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Estudiante {
 
-    private String nombre, genero;
+    private String nombre, genero,facultad;
 
     private int codigo, semestre;
 
@@ -12,11 +12,12 @@ public class Estudiante {
 
     }
 
-    public Estudiante(String nombre, int codigo, int semestre, String genero) {
+    public Estudiante(String nombre, int codigo, int semestre, String genero, String facultad) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.semestre = semestre;
         this.genero = genero;
+        this.facultad=facultad;
     }
 
     public String getNombre() {
@@ -51,6 +52,13 @@ public class Estudiante {
         this.genero = genero;
     }
 
+    public String getFacultad() {
+        return facultad;
+    }
+
+    public void setFacultad(String facultad) {
+        this.facultad = facultad;
+    }
 
     @Override
     public boolean equals(Object o) {
