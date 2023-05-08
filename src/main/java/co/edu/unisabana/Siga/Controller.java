@@ -79,4 +79,21 @@ public class Controller {
         return busqueda;
     }
 
+    @PostMapping(path = "/estudiante/actualizar/{codigo}")
+    public Estudiante actualizarEstudiante (@RequestBody Estudiante estudianteActulizado ,@PathVariable int codigo){
+        estudianteActulizado=new Estudiante();
+        String nuevaFacultad=estudianteActulizado.getFacultad();
+        String nuevoNombre=estudianteActulizado.getNombre();
+        String nuevoGenero =estudianteActulizado.getGenero();
+        int nuevoSemestre= estudianteActulizado.getSemestre();
+        for (Estudiante estudiante: estudianteList){
+            if (estudiante.getCodigo()== codigo){
+                estudiante.setFacultad(nuevaFacultad);
+                estudiante.setNombre(nuevoNombre);
+                estudiante.setGenero(nuevoGenero);
+                estudiante.setSemestre(nuevoSemestre);
+            }
+        }
+        return new Estudiante();
+    }
 }
