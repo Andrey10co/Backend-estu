@@ -9,7 +9,7 @@ import java.util.List;
 public class Controller {
     List<Estudiante> estudianteList= new ArrayList<>();
 
-    @GetMapping(path = "/estudiantes/todos")
+    @GetMapping(path = "/estudiante/todos")
     public List<Estudiante> obtenerEstudiantes(){
         return estudianteList;
     }
@@ -47,14 +47,14 @@ public class Controller {
     }
 
     @PostMapping (path = "/estudiante/crear")
-    public String crearEstudiante(@RequestBody Estudiante estudiante){
+    public Respuesta crearEstudiante(@RequestBody Estudiante estudiante){
         estudiante.setCodigo((int)(Math.random()*1000));
         estudianteList.add(estudiante);
-        return "Estudiante ingresado corectamente";
+        return new Respuesta("Estudiante ingresado corectamente");
     }
 
     @DeleteMapping(path = "estudiante/eliminar/{codigo}")
-    public String eliminarEstudiante (@PathVariable int codigo){
+    public Respuesta eliminarEstudiante (@PathVariable int codigo){
         List<Estudiante> busqueda =new ArrayList<>();
         for (Estudiante estudiante: estudianteList){
             if (estudiante.getCodigo()== codigo){
@@ -62,7 +62,7 @@ public class Controller {
                 estudianteList=busqueda;
             }
         }
-        return "Estudiante eliminado correctamente";
+        return new Respuesta("Estudiante eliminado correctamente");
     }
 
     @GetMapping(path = "/estudiante/busca")
